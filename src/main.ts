@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { VazioParaNuloInterceptor } from './common/vazio-para-nulo.interceptor';
+import { QueryFailedFilter } from './common/query-failed.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalInterceptors(new VazioParaNuloInterceptor());
+  app.useGlobalFilters(new QueryFailedFilter());
 
   // Habilitar CORS para o frontend
   app.enableCors({
