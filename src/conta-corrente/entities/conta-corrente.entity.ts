@@ -3,21 +3,21 @@ import { MovContaCorrente } from '../../mov-conta-corrente/entities/mov-conta-co
 
 @Entity('CONTA_CORRENTE')
 export class ContaCorrente {
-  @PrimaryGeneratedColumn({ name: 'id_conta_corrente' })
-  idContaCorrente: number;
+  @PrimaryGeneratedColumn({ name: 'ID_CONTA_CORRENTE' })
+  ID_CONTA_CORRENTE: number;
 
-  @Column({ name: 'banco', type: 'varchar', length: 50, nullable: true })
-  banco: string;
+  @Column({ name: 'BANCO', type: 'varchar', length: 50, nullable: true })
+  BANCO: string;
 
-  @Column({ name: 'agencia', type: 'varchar', length: 20, nullable: true })
-  agencia: string;
+  @Column({ name: 'AGENCIA', type: 'varchar', length: 20, nullable: true })
+  AGENCIA: string;
 
-  @Column({ name: 'num_conta', type: 'varchar', length: 20, nullable: true })
-  numConta: string;
+  @Column({ name: 'NUM_CONTA', type: 'varchar', length: 20, nullable: true })
+  NUM_CONTA: string;
 
-  @Column({ name: 'saldo_atual', type: 'decimal', precision: 12, scale: 2, nullable: true })
-  saldoAtual: number;
+  @Column({ name: 'SALDO_ATUAL', type: 'decimal', precision: 12, scale: 2, nullable: true })
+  SALDO_ATUAL: number;
 
-  @OneToMany(() => MovContaCorrente, movContaCorrente => movContaCorrente.contaCorrente)
+  @OneToMany(() => MovContaCorrente, mov => mov.contaCorrente)
   movimentos: MovContaCorrente[];
 }

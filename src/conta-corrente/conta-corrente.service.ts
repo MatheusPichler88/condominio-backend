@@ -15,7 +15,7 @@ export class ContaCorrenteService {
   }
 
   findOne(id: number): Promise<ContaCorrente | null> {
-    return this.contaCorrenteRepository.findOneBy({ idContaCorrente: id } as any);
+    return this.contaCorrenteRepository.findOneBy({ ID_CONTA_CORRENTE: id });
   }
 
   create(contaCorrente: Partial<ContaCorrente>): Promise<ContaCorrente> {
@@ -23,8 +23,9 @@ export class ContaCorrenteService {
     return this.contaCorrenteRepository.save(novaContaCorrente);
   }
 
-  async update(id: number, contaCorrente: Partial<ContaCorrente>): Promise<void> {
+  async update(id: number, contaCorrente: Partial<ContaCorrente>): Promise<ContaCorrente | null> {
     await this.contaCorrenteRepository.update(id, contaCorrente);
+    return this.contaCorrenteRepository.findOneBy({ ID_CONTA_CORRENTE: id });
   }
 
   async remove(id: number): Promise<void> {

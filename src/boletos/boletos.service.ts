@@ -15,7 +15,7 @@ export class BoletosService {
   }
 
   findOne(id: number): Promise<Boleto | null> {
-    return this.boletosRepository.findOneBy({ idBoleto: id } as any);
+    return this.boletosRepository.findOneBy({ ID_BOLETO: id });
   }
 
   create(boleto: Partial<Boleto>): Promise<Boleto> {
@@ -23,8 +23,9 @@ export class BoletosService {
     return this.boletosRepository.save(novoBoleto);
   }
 
-  async update(id: number, boleto: Partial<Boleto>): Promise<void> {
+  async update(id: number, boleto: Partial<Boleto>): Promise<Boleto | null> {
     await this.boletosRepository.update(id, boleto);
+    return this.boletosRepository.findOneBy({ ID_BOLETO: id });
   }
 
   async remove(id: number): Promise<void> {

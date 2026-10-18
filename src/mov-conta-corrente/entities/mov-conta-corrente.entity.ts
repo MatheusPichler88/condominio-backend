@@ -3,31 +3,34 @@ import { ContaCorrente } from '../../conta-corrente/entities/conta-corrente.enti
 
 @Entity('MOV_CONTA_CORRENTE')
 export class MovContaCorrente {
-  @PrimaryGeneratedColumn({ name: 'id_movimento' })
-  idMovimento: number;
+  @PrimaryGeneratedColumn({ name: 'ID_MOVIMENTO' })
+  ID_MOVIMENTO: number;
+
+  @Column({ name: 'ID_CONTA_CORRENTE', type: 'int', nullable: true })
+  ID_CONTA_CORRENTE: number;
+
+  @Column({ name: 'ID_CONTA', type: 'int', nullable: true })
+  ID_CONTA: number;
+
+  @Column({ name: 'ORIGEM_CONTA', type: 'varchar', length: 20, nullable: true })
+  ORIGEM_CONTA: string;
+
+  @Column({ name: 'TIPO_MOVIMENTO', type: 'varchar', length: 20, nullable: true })
+  TIPO_MOVIMENTO: string;
+
+  @Column({ name: 'VALOR', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  VALOR: number;
+
+  @Column({ name: 'DATA_MOVIMENTO', type: 'date', nullable: true })
+  DATA_MOVIMENTO: Date;
+
+  @Column({ name: 'HR_MOVIMENTO', type: 'time', nullable: true })
+  HR_MOVIMENTO: string;
+
+  @Column({ name: 'DESCRICAO', type: 'varchar', length: 255, nullable: true })
+  DESCRICAO: string;
 
   @ManyToOne(() => ContaCorrente, contaCorrente => contaCorrente.movimentos)
-  @JoinColumn({ name: 'id_conta_corrente' })
+  @JoinColumn({ name: 'ID_CONTA_CORRENTE' })
   contaCorrente: ContaCorrente;
-
-  @Column({ name: 'id_conta', type: 'int', nullable: true })
-  idConta: number;
-
-  @Column({ name: 'origem_conta', type: 'varchar', length: 20, nullable: true })
-  origemConta: string;
-
-  @Column({ name: 'tipo_movimento', type: 'varchar', length: 20, nullable: true })
-  tipoMovimento: string;
-
-  @Column({ name: 'valor', type: 'decimal', precision: 10, scale: 2, nullable: true })
-  valor: number;
-
-  @Column({ name: 'data_movimento', type: 'date', nullable: true })
-  dataMovimento: Date;
-
-  @Column({ name: 'hr_movimento', type: 'time', nullable: true })
-  hrMovimento: string;
-
-  @Column({ name: 'descricao', type: 'text', nullable: true })
-  descricao: string;
 }

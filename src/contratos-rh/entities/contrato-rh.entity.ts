@@ -3,22 +3,25 @@ import { Funcionario } from '../../funcionarios/entities/funcionario.entity';
 
 @Entity('CONTRATOS_RH')
 export class ContratoRH {
-  @PrimaryGeneratedColumn({ name: 'id_contrato_rh' })
-  idContratoRh: number;
+  @PrimaryGeneratedColumn({ name: 'ID_CONTRATO_RH' })
+  ID_CONTRATO_RH: number;
+
+  @Column({ name: 'ID_FUNCIONARIO', type: 'int', nullable: true })
+  ID_FUNCIONARIO: number;
+
+  @Column({ name: 'DESCRICAO', type: 'varchar', length: 255, nullable: true })
+  DESCRICAO: string;
+
+  @Column({ name: 'DATA_INICIO', type: 'date', nullable: true })
+  DATA_INICIO: Date;
+
+  @Column({ name: 'DATA_FIM', type: 'date', nullable: true })
+  DATA_FIM: Date;
+
+  @Column({ name: 'SALARIO_ACORDADO', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  SALARIO_ACORDADO: number;
 
   @ManyToOne(() => Funcionario, funcionario => funcionario.contratos)
-  @JoinColumn({ name: 'id_funcionario' })
+  @JoinColumn({ name: 'ID_FUNCIONARIO' })
   funcionario: Funcionario;
-
-  @Column({ name: 'descricao', type: 'text', nullable: true })
-  descricao: string;
-
-  @Column({ name: 'data_inicio', type: 'date', nullable: true })
-  dataInicio: Date;
-
-  @Column({ name: 'data_fim', type: 'date', nullable: true })
-  dataFim: Date;
-
-  @Column({ name: 'salario_acordado', type: 'decimal', precision: 10, scale: 2, nullable: true })
-  salarioAcordado: number;
 }

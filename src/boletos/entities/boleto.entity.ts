@@ -3,19 +3,22 @@ import { Morador } from '../../moradores/entities/morador.entity';
 
 @Entity('BOLETOS')
 export class Boleto {
-  @PrimaryGeneratedColumn({ name: 'id_boleto' })
-  idBoleto: number;
+  @PrimaryGeneratedColumn({ name: 'ID_BOLETO' })
+  ID_BOLETO: number;
+
+  @Column({ name: 'ID_MORADOR', type: 'int', nullable: true })
+  ID_MORADOR: number;
+
+  @Column({ name: 'VL_BOLETO', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  VL_BOLETO: number;
+
+  @Column({ name: 'DT_VENCIMENTO', type: 'date', nullable: true })
+  DT_VENCIMENTO: Date;
+
+  @Column({ name: 'BOLETO_STATUS', type: 'enum', enum: ['PAGO', 'PENDENTE', 'ATRASADO', 'EXPIRADO'], nullable: true })
+  BOLETO_STATUS: string;
 
   @ManyToOne(() => Morador, morador => morador.boletos)
-  @JoinColumn({ name: 'id_morador' })
+  @JoinColumn({ name: 'ID_MORADOR' })
   morador: Morador;
-
-  @Column({ name: 'vl_boleto', type: 'decimal', precision: 10, scale: 2 })
-  vlBoleto: number;
-
-  @Column({ name: 'dt_vencimento', type: 'date' })
-  dtVencimento: Date;
-
-  @Column({ name: 'status', type: 'enum', enum: ['Pago', 'Atrasado', 'Pendente'], nullable: true })
-  status: string;
 }

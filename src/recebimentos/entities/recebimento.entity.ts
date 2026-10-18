@@ -3,19 +3,22 @@ import { ContaReceber } from '../../contas-receber/entities/conta-receber.entity
 
 @Entity('RECEBIMENTOS')
 export class Recebimento {
-  @PrimaryGeneratedColumn({ name: 'id_recebimento' })
-  idRecebimento: number;
+  @PrimaryGeneratedColumn({ name: 'ID_RECEBIMENTO' })
+  ID_RECEBIMENTO: number;
+
+  @Column({ name: 'ID_CONTA_RECEBER', type: 'int', nullable: true })
+  ID_CONTA_RECEBER: number;
+
+  @Column({ name: 'DATA_RECEBIMENTO', type: 'date', nullable: true })
+  DATA_RECEBIMENTO: Date;
+
+  @Column({ name: 'VALOR_RECEBIDO', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  VALOR_RECEBIDO: number;
+
+  @Column({ name: 'FORMA_RECEBIMENTO', type: 'varchar', length: 30, nullable: true })
+  FORMA_RECEBIMENTO: string;
 
   @ManyToOne(() => ContaReceber, contaReceber => contaReceber.recebimentos)
-  @JoinColumn({ name: 'id_conta_receber' })
+  @JoinColumn({ name: 'ID_CONTA_RECEBER' })
   contaReceber: ContaReceber;
-
-  @Column({ name: 'data_recebimento', type: 'date', nullable: true })
-  dataRecebimento: Date;
-
-  @Column({ name: 'valor_recebido', type: 'decimal', precision: 10, scale: 2, nullable: true })
-  valorRecebido: number;
-
-  @Column({ name: 'forma_recebimento', type: 'varchar', length: 30, nullable: true })
-  formaRecebimento: string;
 }

@@ -1,21 +1,24 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ContaPagar } from '../../contas-pagar/entities/conta-pagar.entity';
 
-@Entity('pagamentos')
+@Entity('PAGAMENTOS')
 export class Pagamento {
-  @PrimaryGeneratedColumn({ name: 'id_pagamento' })
-  idPagamento: number;
+  @PrimaryGeneratedColumn({ name: 'ID_PAGAMENTO' })
+  ID_PAGAMENTO: number;
+
+  @Column({ name: 'ID_CONTA_PAGAR', type: 'int', nullable: true })
+  ID_CONTA_PAGAR: number;
+
+  @Column({ name: 'DATA_PAGAMENTO', type: 'date', nullable: true })
+  DATA_PAGAMENTO: Date;
+
+  @Column({ name: 'VALOR_PAGO', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  VALOR_PAGO: number;
+
+  @Column({ name: 'FORMA_PAGAMENTO', type: 'varchar', length: 30, nullable: true })
+  FORMA_PAGAMENTO: string;
 
   @ManyToOne(() => ContaPagar, contaPagar => contaPagar.pagamentos)
-  @JoinColumn({ name: 'id_conta_pagar' })
+  @JoinColumn({ name: 'ID_CONTA_PAGAR' })
   contaPagar: ContaPagar;
-
-  @Column({ name: 'data_pagamento', type: 'date', nullable: true })
-  dataPagamento: Date;
-
-  @Column({ name: 'valor_pago', type: 'decimal', precision: 10, scale: 2, nullable: true })
-  valorPago: number;
-
-  @Column({ name: 'forma_pagamento', type: 'varchar', length: 30, nullable: true })
-  formaPagamento: string;
 }

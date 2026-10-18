@@ -15,7 +15,7 @@ export class ComunicadosService {
   }
 
   findOne(id: number): Promise<Comunicado | null> {
-    return this.comunicadosRepository.findOneBy({ idComunicado: id } as any);
+    return this.comunicadosRepository.findOneBy({ ID_COMUNICADO: id });
   }
 
   create(comunicado: Partial<Comunicado>): Promise<Comunicado> {
@@ -23,8 +23,9 @@ export class ComunicadosService {
     return this.comunicadosRepository.save(novoComunicado);
   }
 
-  async update(id: number, comunicado: Partial<Comunicado>): Promise<void> {
+  async update(id: number, comunicado: Partial<Comunicado>): Promise<Comunicado | null> {
     await this.comunicadosRepository.update(id, comunicado);
+    return this.comunicadosRepository.findOneBy({ ID_COMUNICADO: id });
   }
 
   async remove(id: number): Promise<void> {

@@ -15,7 +15,7 @@ export class MovContaCorrenteService {
   }
 
   findOne(id: number): Promise<MovContaCorrente | null> {
-    return this.movContaCorrenteRepository.findOneBy({ idMovimento: id } as any);
+    return this.movContaCorrenteRepository.findOneBy({ ID_MOVIMENTO: id });
   }
 
   create(movContaCorrente: Partial<MovContaCorrente>): Promise<MovContaCorrente> {
@@ -23,8 +23,9 @@ export class MovContaCorrenteService {
     return this.movContaCorrenteRepository.save(novoMovContaCorrente);
   }
 
-  async update(id: number, movContaCorrente: Partial<MovContaCorrente>): Promise<void> {
+  async update(id: number, movContaCorrente: Partial<MovContaCorrente>): Promise<MovContaCorrente | null> {
     await this.movContaCorrenteRepository.update(id, movContaCorrente);
+    return this.movContaCorrenteRepository.findOneBy({ ID_MOVIMENTO: id });
   }
 
   async remove(id: number): Promise<void> {
