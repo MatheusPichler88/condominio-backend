@@ -14,7 +14,7 @@ export class AuthService {
 
   async login(dto: any) {
     // 1. Busca o usuário
-    const user = await this.usuariosService.findByCpfCnpj(dto.CPF_CNPJ);
+    const user = await this.usuariosService.findByCpfCnpj(dto.CPF_CNPJ ?? dto.login);
     
     // 2. Valida usuário e senha
     if (!user || !(await bcrypt.compare(dto.password, user.password))) {
