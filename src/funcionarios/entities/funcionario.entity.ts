@@ -4,21 +4,24 @@ import { ContratoRH } from '../../contratos-rh/entities/contrato-rh.entity';
 
 @Entity('FUNCIONARIOS')
 export class Funcionario {
-  @PrimaryGeneratedColumn({ name: 'id_funcionarios' })
-  idFuncionario: number;
+  @PrimaryGeneratedColumn({ name: 'ID_FUNCIONARIO' })
+  ID_FUNCIONARIO: number;
+
+  @Column({ name: 'ID_PESSOA', type: 'int', nullable: true })
+  ID_PESSOA: number;
+
+  @Column({ name: 'FUNCAO', type: 'varchar', length: 100, nullable: true })
+  FUNCAO: string;
+
+  @Column({ name: 'DATA_ADMISSAO', type: 'date', nullable: true })
+  DATA_ADMISSAO: Date;
+
+  @Column({ name: 'SALARIO', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  SALARIO: number;
 
   @ManyToOne(() => Pessoa, pessoa => pessoa.funcionarios)
-  @JoinColumn({ name: 'id_pessoa' })
+  @JoinColumn({ name: 'ID_PESSOA' })
   pessoa: Pessoa;
-
-  @Column({ name: 'funcao', type: 'varchar', length: 255 })
-  funcao: string;
-
-  @Column({ name: 'data_admissao', type: 'date', nullable: true })
-  dataAdmissao: Date;
-
-  @Column({ name: 'salario', type: 'decimal', precision: 10, scale: 2, nullable: true })
-  salario: number;
 
   @OneToMany(() => ContratoRH, contratoRh => contratoRh.funcionario)
   contratos: ContratoRH[];

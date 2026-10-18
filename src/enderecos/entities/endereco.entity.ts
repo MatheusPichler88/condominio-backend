@@ -3,28 +3,31 @@ import { Pessoa } from '../../pessoas/entities/pessoa.entity';
 
 @Entity('ENDERECOS')
 export class Endereco {
-  @PrimaryGeneratedColumn({ name: 'id_enderecos' })
-  idEndereco: number;
+  @PrimaryGeneratedColumn({ name: 'ID_ENDERECO' })
+  ID_ENDERECO: number;
+
+  @Column({ name: 'ID_PESSOA', type: 'int', nullable: true })
+  ID_PESSOA: number;
+
+  @Column({ name: 'LOGADOURO', type: 'varchar', length: 200 })
+  LOGADOURO: string;
+
+  @Column({ name: 'NUMERO', type: 'int', nullable: true })
+  NUMERO: number;
+
+  @Column({ name: 'BAIRRO', type: 'varchar', length: 50, nullable: true })
+  BAIRRO: string;
+
+  @Column({ name: 'CIDADE', type: 'varchar', length: 50, nullable: true })
+  CIDADE: string;
+
+  @Column({ name: 'UF', type: 'char', length: 2, nullable: true })
+  UF: string;
+
+  @Column({ name: 'CEP', type: 'char', length: 8 })
+  CEP: string;
 
   @ManyToOne(() => Pessoa, pessoa => pessoa.enderecos)
-  @JoinColumn({ name: 'id_pessoa' })
+  @JoinColumn({ name: 'ID_PESSOA' })
   pessoa: Pessoa;
-
-  @Column({ name: 'logradouro', type: 'varchar', length: 255 })
-  logradouro: string;
-
-  @Column({ name: 'numero', type: 'int' })
-  numero: number;
-
-  @Column({ name: 'bairro', type: 'varchar', length: 255 })
-  bairro: string;
-
-  @Column({ name: 'cidade', type: 'varchar', length: 255 })
-  cidade: string;
-
-  @Column({ name: 'uf', type: 'char', length: 2 })
-  uf: string;
-
-  @Column({ name: 'cep', type: 'char', length: 8 })
-  cep: string;
 }

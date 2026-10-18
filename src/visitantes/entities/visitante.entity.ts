@@ -4,15 +4,18 @@ import { Visita } from '../../visitas/entities/visita.entity';
 
 @Entity('VISITANTES')
 export class Visitante {
-  @PrimaryGeneratedColumn({ name: 'id_visitantes' })
-  idVisitante: number;
+  @PrimaryGeneratedColumn({ name: 'ID_VISITANTE' })
+  ID_VISITANTE: number;
+
+  @Column({ name: 'ID_PESSOA', type: 'int', nullable: true })
+  ID_PESSOA: number;
+
+  @Column({ name: 'DOCUMENTO', type: 'varchar', length: 14, nullable: true })
+  DOCUMENTO: string;
 
   @ManyToOne(() => Pessoa, pessoa => pessoa.visitantes)
-  @JoinColumn({ name: 'id_pessoa' })
+  @JoinColumn({ name: 'ID_PESSOA' })
   pessoa: Pessoa;
-
-  @Column({ name: 'documento', type: 'varchar', length: 255, nullable: true })
-  documento: string;
 
   @OneToMany(() => Visita, visita => visita.visitante)
   visitas: Visita[];

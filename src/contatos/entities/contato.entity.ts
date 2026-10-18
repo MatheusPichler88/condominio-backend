@@ -3,16 +3,19 @@ import { Pessoa } from '../../pessoas/entities/pessoa.entity';
 
 @Entity('CONTATOS')
 export class Contato {
-  @PrimaryGeneratedColumn({ name: 'id_contato' })
-  idContato: number;
+  @PrimaryGeneratedColumn({ name: 'ID_CONTATO' })
+  ID_CONTATO: number;
 
-  @Column({ name: 'tipo_contato', type: 'varchar', length: 255 })
-  tipoContato: string;
+  @Column({ name: 'ID_PESSOA', type: 'int', nullable: true })
+  ID_PESSOA: number;
 
-  @Column({ name: 'valor_contato', type: 'varchar', length: 255 })
-  valorContato: string;
+  @Column({ name: 'TIPO_CONTATO', type: 'varchar', length: 200, nullable: true })
+  TIPO_CONTATO: string;
+
+  @Column({ name: 'VALOR_CONTATO', type: 'varchar', length: 200, nullable: true })
+  VALOR_CONTATO: string;
 
   @ManyToOne(() => Pessoa, pessoa => pessoa.contatos)
-  @JoinColumn({ name: 'id_pessoa' })
+  @JoinColumn({ name: 'ID_PESSOA' })
   pessoa: Pessoa;
 }

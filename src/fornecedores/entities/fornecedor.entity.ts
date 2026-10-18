@@ -5,15 +5,18 @@ import { ContaPagar } from '../../contas-pagar/entities/conta-pagar.entity';
 
 @Entity('FORNECEDORES')
 export class Fornecedor {
-  @PrimaryGeneratedColumn({ name: 'id_fornecedores' })
-  idFornecedor: number;
+  @PrimaryGeneratedColumn({ name: 'ID_FORNECEDOR' })
+  ID_FORNECEDOR: number;
+
+  @Column({ name: 'ID_PESSOA', type: 'int', nullable: true })
+  ID_PESSOA: number;
+
+  @Column({ name: 'AREA_ATUACAO', type: 'varchar', length: 200, nullable: true })
+  AREA_ATUACAO: string;
 
   @ManyToOne(() => Pessoa, pessoa => pessoa.fornecedores)
-  @JoinColumn({ name: 'id_pessoa' })
+  @JoinColumn({ name: 'ID_PESSOA' })
   pessoa: Pessoa;
-
-  @Column({ name: 'area_atuacao', type: 'varchar', length: 255, nullable: true })
-  areaAtuacao: string;
 
   @OneToMany(() => Contrato, contrato => contrato.fornecedor)
   contratos: Contrato[];

@@ -15,7 +15,7 @@ export class MoradoresService {
   }
 
   findOne(id: number): Promise<Morador | null> {
-    return this.moradoresRepository.findOneBy({ idMorador: id } as any);
+    return this.moradoresRepository.findOneBy({ ID_MORADOR: id });
   }
 
   create(morador: Partial<Morador>): Promise<Morador> {
@@ -23,8 +23,9 @@ export class MoradoresService {
     return this.moradoresRepository.save(novoMorador);
   }
 
-  async update(id: number, morador: Partial<Morador>): Promise<void> {
+  async update(id: number, morador: Partial<Morador>): Promise<Morador | null> {
     await this.moradoresRepository.update(id, morador);
+    return this.moradoresRepository.findOneBy({ ID_MORADOR: id });
   }
 
   async remove(id: number): Promise<void> {

@@ -15,7 +15,7 @@ export class EnderecosService {
   }
 
   findOne(id: number): Promise<Endereco | null> {
-    return this.enderecosRepository.findOneBy({ idEndereco: id } as any);
+    return this.enderecosRepository.findOneBy({ ID_ENDERECO: id });
   }
 
   create(endereco: Partial<Endereco>): Promise<Endereco> {
@@ -23,8 +23,9 @@ export class EnderecosService {
     return this.enderecosRepository.save(novoEndereco);
   }
 
-  async update(id: number, endereco: Partial<Endereco>): Promise<void> {
+  async update(id: number, endereco: Partial<Endereco>): Promise<Endereco | null> {
     await this.enderecosRepository.update(id, endereco);
+    return this.enderecosRepository.findOneBy({ ID_ENDERECO: id });
   }
 
   async remove(id: number): Promise<void> {

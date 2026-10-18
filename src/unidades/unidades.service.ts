@@ -15,7 +15,7 @@ export class UnidadesService {
   }
 
   findOne(id: number): Promise<Unidade | null> {
-    return this.unidadesRepository.findOneBy({ idUnidade: id } as any);
+    return this.unidadesRepository.findOneBy({ ID_UNIDADE: id });
   }
 
   create(unidade: Partial<Unidade>): Promise<Unidade> {
@@ -23,8 +23,9 @@ export class UnidadesService {
     return this.unidadesRepository.save(novaUnidade);
   }
 
-  async update(id: number, unidade: Partial<Unidade>): Promise<void> {
+  async update(id: number, unidade: Partial<Unidade>): Promise<Unidade | null> {
     await this.unidadesRepository.update(id, unidade);
+    return this.unidadesRepository.findOneBy({ ID_UNIDADE: id });
   }
 
   async remove(id: number): Promise<void> {
