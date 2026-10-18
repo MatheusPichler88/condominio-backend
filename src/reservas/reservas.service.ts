@@ -15,7 +15,7 @@ export class ReservasService {
   }
 
   findOne(id: number): Promise<Reserva | null> {
-    return this.reservasRepository.findOneBy({ idReserva: id } as any);
+    return this.reservasRepository.findOneBy({ ID_RESERVA: id });
   }
 
   create(reserva: Partial<Reserva>): Promise<Reserva> {
@@ -23,8 +23,9 @@ export class ReservasService {
     return this.reservasRepository.save(novaReserva);
   }
 
-  async update(id: number, reserva: Partial<Reserva>): Promise<void> {
+  async update(id: number, reserva: Partial<Reserva>): Promise<Reserva | null> {
     await this.reservasRepository.update(id, reserva);
+    return this.reservasRepository.findOneBy({ ID_RESERVA: id });
   }
 
   async remove(id: number): Promise<void> {

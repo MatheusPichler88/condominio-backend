@@ -15,7 +15,7 @@ export class AreasComunsService {
   }
 
   findOne(id: number): Promise<AreaComum | null> {
-    return this.areasComunsRepository.findOneBy({ idAreaComum: id } as any);
+    return this.areasComunsRepository.findOneBy({ ID_AREA_COMUM: id });
   }
 
   create(areaComum: Partial<AreaComum>): Promise<AreaComum> {
@@ -23,8 +23,9 @@ export class AreasComunsService {
     return this.areasComunsRepository.save(novaAreaComum);
   }
 
-  async update(id: number, areaComum: Partial<AreaComum>): Promise<void> {
+  async update(id: number, areaComum: Partial<AreaComum>): Promise<AreaComum | null> {
     await this.areasComunsRepository.update(id, areaComum);
+    return this.areasComunsRepository.findOneBy({ ID_AREA_COMUM: id });
   }
 
   async remove(id: number): Promise<void> {
