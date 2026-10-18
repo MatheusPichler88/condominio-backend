@@ -2,97 +2,109 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Condomínio Backend
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API REST para gestão de condomínios, desenvolvida com NestJS. Gerencia
+moradores, unidades, boletos, contas a pagar/receber, contratos,
+funcionários, fornecedores, visitantes, reservas de áreas comuns,
+comunicados e autenticação de usuários.
 
-## Description
+## Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Backend:** Node.js, NestJS, TypeScript, TypeORM, MySQL, JWT
 
-## Project setup
+**Frontend:** [condominio-frontend](https://github.com/MatheusPichler88/condominio-frontend) (Next.js)
+
+## Como Executar
+
+### Pré-requisitos
+
+- Node.js 18 ou superior
+- MySQL
+
+### Instalação
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+### Banco de dados
+
+Importe o arquivo `dbCondominio.sql` no seu MySQL para criar as tabelas necessárias.
+
+A conexão (host, porta, usuário, senha e nome do banco `DBCONDOMINIO`) fica em
+`src/app.module.ts`. Ajuste para o seu ambiente.
+
+### Variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+JWT_SECRET=uma_chave_secreta
+PORT=3000
+```
+
+### Rodar em desenvolvimento
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev
 ```
 
-## Run tests
+A API estará disponível em `http://localhost:3000`.
+
+## Autenticação
+
+As rotas de leitura (`GET`) são públicas. Criar, editar e excluir (`POST`, `PUT`
+e `DELETE`) exigem um token JWT no cabeçalho `Authorization: Bearer <token>`.
+
+1. Crie um usuário:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+curl -X POST localhost:3000/usuarios -H "Content-Type: application/json" \
+  -d '{"NOME":"Admin","CPF_CNPJ":"11122233344","password":"123456"}'
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. Faça login e copie o `access_token` da resposta:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+curl -X POST localhost:3000/auth/login -H "Content-Type: application/json" \
+  -d '{"CPF_CNPJ":"11122233344","password":"123456"}'
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Rotas
 
-## Resources
+Todas as rotas abaixo têm o mesmo CRUD: `GET /rota`, `GET /rota/:id`,
+`POST /rota`, `PUT /rota/:id` e `DELETE /rota/:id`.
 
-Check out a few resources that may come in handy when working with NestJS:
+| Rota | Descrição |
+| --- | --- |
+| `/pessoas` | Cadastro geral de pessoas físicas e jurídicas |
+| `/contatos` | Contatos das pessoas |
+| `/enderecos` | Endereços das pessoas |
+| `/unidades` | Apartamentos e lotes |
+| `/moradores` | Pessoas associadas às unidades |
+| `/funcionarios` | Funcionários |
+| `/contratos-rh` | Contratos dos funcionários |
+| `/fornecedores` | Fornecedores |
+| `/contratos` | Contratos com fornecedores |
+| `/visitantes` | Visitantes |
+| `/visitas` | Registro de visitas |
+| `/areas-comuns` | Áreas comuns do condomínio |
+| `/reservas` | Reservas de áreas comuns |
+| `/boletos` | Boletos dos moradores |
+| `/comunicados` | Mural de avisos |
+| `/contas-pagar` | Contas a pagar |
+| `/pagamentos` | Pagamentos das contas a pagar |
+| `/contas-receber` | Contas a receber |
+| `/recebimentos` | Recebimentos das contas a receber |
+| `/conta-corrente` | Contas correntes |
+| `/mov-conta-corrente` | Movimentações das contas correntes |
+| `/auth/login` | Login (retorna o token JWT) |
+| `/usuarios` | Usuários do sistema |
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Observações
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Os nomes dos campos seguem as colunas do banco (ex.: `ID_PESSOA`, `NUM_UNIDADE`).
+- Campos opcionais enviados vazios (`""`) são salvos como `null`.
+- Erros do banco (registro em uso, valor duplicado, chave inexistente, campo grande
+  demais) retornam uma mensagem clara em vez de erro genérico.
